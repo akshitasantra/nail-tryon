@@ -37,11 +37,7 @@ Think Pinterest nail inspo, but you actually get to see if it eats on *your* han
 
 ## 🛠️ Tech Stack
 
-- **React** (Vite)
+- **React**
 - **HTML Canvas** for rendering nail designs
 - **CSS** (custom styling, no UI libraries)
 - **JavaScript** (hooks + modular architecture)
-
----
-
-## 📁 Project Structure
