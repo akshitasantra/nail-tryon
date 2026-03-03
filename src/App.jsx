@@ -3,17 +3,24 @@ import HandSelector from './components/HandSelector';
 import DesignSelector from './components/DesignSelector';
 import NailCanvas from './components/NailCanvas';
 import SaveButton from './components/SaveButton';
+import UploadHand from './components/UploadHand';
 import { HAND_MODELS } from './data/hands';
 import { PRESET_DESIGNS } from './data/designs';
 import './styles/globals.css';
 
+const TABS = [
+  { id: 'hand',   label: 'choose ur hand ♡' },
+  { id: 'upload', label: 'upload photo 📷'   },
+  { id: 'design', label: 'nail inspo ✿'      },
+];
+
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('hand');
-  const [selectedHand, setSelectedHand] = useState(HAND_MODELS[1]); // medium default
-  const [selectedDesign, setSelectedDesign] = useState(PRESET_DESIGNS[2]); // aura default
+  const [activeTab, setActiveTab]         = useState('hand');
+  const [selectedHand, setSelectedHand]   = useState(HAND_MODELS[1]);
+  const [selectedDesign, setSelectedDesign] = useState(PRESET_DESIGNS[2]);
   const [uploadedDesignImg, setUploadedDesignImg] = useState(null);
-  const [uploadedDesign, setUploadedDesign] = useState(null);
+  const [uploadedDesign, setUploadedDesign]       = useState(null);
+  const [customNailData, setCustomNailData]       = useState(null);
   const canvasRef = useRef(null);
 
   function handleUpload(img) {
@@ -48,27 +55,22 @@ export default function App() {
             <div className="window-bar">
               <span className="window-title">♡ nail preview</span>
               <div className="window-controls">
-                <span />
-                <span />
-                <span />
+                <span /><span /><span />
               </div>
             </div>
-            {/* NailCanvas needs the ref forwarded for SaveButton */}
             <div className="canvas-inner">
               <NailCanvas
                 handModel={selectedHand}
                 design={uploadedDesign || selectedDesign}
                 uploadedDesignImg={uploadedDesignImg}
+                customNailData={customNailData}
                 ref={canvasRef}
               />
             </div>
           </div>
 
           <div className="current-look">
-            <div
-              className="look-swatch"
-              style={{ background: selectedHand?.tone || '#c47e50' }}
-            />
+            <div className="look-swatch" style={{ background: selectedHand?.tone || '#c47e50' }} />
             <span>{selectedHand?.label}</span>
             <span className="divider">✦</span>
             <span>{(uploadedDesign || selectedDesign)?.emoji}</span>
@@ -80,26 +82,41 @@ export default function App() {
 
         {/* RIGHT — controls */}
         <section className="controls-col">
+
+          {/* TAB BUTTONS — this was missing! */}
           <div className="tabs">
-            {['hand', 'design'].map(tab => (
+            {TABS.map(tab => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`tab ${activeTab === tab ? 'active' : ''}`}
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`tab ${activeTab === tab.id ? 'active' : ''}`}
               >
-                {tab === 'hand' ? 'choose ur hand ♡' : 'nail inspo ✿'}
+                {tab.label}
               </button>
             ))}
           </div>
 
+          {/* TAB CONTENT */}
           <div className="tab-content">
             {activeTab === 'hand' && (
               <HandSelector selected={selectedHand} onSelect={setSelectedHand} />
             )}
+            {activeTab === 'upload' && (
+              <UploadHand
+                onConfirm={(data) => {
+                  setCustomNailData(data);
+                  setActiveTab('design');
+                }}
+              />
+            )}
             {activeTab === 'design' && (
               <DesignSelector
                 selected={selectedDesign}
-                onSelect={(d) => { setSelectedDesign(d); setUploadedDesign(null); setUploadedDesignImg(null); }}
+                onSelect={(d) => {
+                  setSelectedDesign(d);
+                  setUploadedDesign(null);
+                  setUploadedDesignImg(null);
+                }}
                 onUpload={handleUpload}
                 uploadedDesign={uploadedDesign}
                 onClearUpload={handleClearUpload}
@@ -112,7 +129,7 @@ export default function App() {
       <footer className="footer">
         made with ♡ polish.exe ~ built for girls with melanin 🌸
         <br />
-        <small>photo upload & AI nail detection coming soon ✦</small>
+        <small>manual nail adjustments coming soon ✦</small>
       </footer>
     </div>
   );

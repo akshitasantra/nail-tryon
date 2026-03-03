@@ -528,3 +528,99 @@ body {
     background: #ff99cc;
     border-radius: 4px;
 }
+
+/* ── Upload Hand Panel ── */
+.upload-hand-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-tip {
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: #ccaacc;
+    line-height: 1.5;
+}
+
+.upload-preview-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-preview-img {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+}
+
+.upload-overlay-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.detect-status {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: #cc88bb;
+    animation: blink 1s step-end infinite;
+}
+
+.detect-error {
+    font-family: 'VT323', monospace;
+    font-size: 15px;
+    color: #ff6688;
+    background: #fff0f4;
+    border: 1px dashed #ff99bb;
+    border-radius: 4px;
+    padding: 8px 10px;
+}
+
+.detect-success {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: #cc66aa;
+}
+
+.detect-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.confirm-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #ff88cc, #cc66ff);
+    color: #fff;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #aa44aa;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+}
+
+.confirm-btn:hover {
+    transform: translateY(-2px);
+}
+
+.retry-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: 2px dashed #ffaadd;
+    font-family: 'VT323', monospace;
+    font-size: 15px;
+    color: #cc88bb;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.retry-btn:hover {
+    background: #fff0f8;
+}

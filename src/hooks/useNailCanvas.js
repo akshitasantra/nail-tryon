@@ -82,23 +82,26 @@ function drawNailDesign(ctx, design, nx, ny, nw, nh, uploadedImg) {
   ctx.fill();
 }
 
-export function useNailCanvas(canvasRef, handModel, design, uploadedDesignImg) {
+export function useNailCanvas(canvasRef, handModel, design, uploadedDesignImg, customNailData) {
   const handImgRef = useRef(null);
 
+  // Load hand image (preset OR uploaded)
   useEffect(() => {
-    if (!handModel?.image) return;
+    const src = customNailData?.image || handModel?.image;
+    if (!src) return;
 
     const img = new Image();
     img.onload = () => {
       handImgRef.current = img;
       renderCanvas();
     };
-    img.src = handModel.image;
-  }, [handModel]);
+    img.crossOrigin = 'anonymous';
+    img.src = src;
+  }, [handModel, customNailData?.image]);
 
   useEffect(() => {
     if (handImgRef.current) renderCanvas();
-  }, [design, uploadedDesignImg]);
+  }, [design, uploadedDesignImg, customNailData]);
 
   function renderCanvas() {
     const canvas = canvasRef.current;
@@ -106,44 +109,42 @@ export function useNailCanvas(canvasRef, handModel, design, uploadedDesignImg) {
     const ctx = canvas.getContext('2d');
     const img = handImgRef.current;
 
-    // Resize canvas to match image
-    canvas.width = img.naturalWidth;
+    canvas.width  = img.naturalWidth;
     canvas.height = img.naturalHeight;
-
-    // Draw the real hand photo
     ctx.drawImage(img, 0, 0);
 
-    // Overlay nails on top
-    handModel.nails.forEach((nail) => {
+    // Use detected nail rects if available, otherwise preset positions
+    const nails = customNailData?.nailRects || handModel?.nails || [];
+
+    nails.forEach((nail) => {
       ctx.save();
-      // Translate to nail center, rotate, then draw
-      const cx = nail.x + nail.w / 2;
-      const cy = nail.y + nail.h / 2;
+
+      // customNailData uses cx/cy (center), presets use x/y (top-left)
+      const cx = nail.cx !== undefined ? nail.cx : nail.x + nail.w / 2;
+      const cy = nail.cy !== undefined ? nail.cy : nail.y + nail.h / 2;
+
       ctx.translate(cx, cy);
       ctx.rotate((nail.rotation * Math.PI) / 180);
 
       const nx = -nail.w / 2;
       const ny = -nail.h / 2;
 
-      // Clip to rounded nail shape
       ctx.beginPath();
       ctx.roundRect(nx, ny, nail.w, nail.h, [nail.w / 2, nail.w / 2, nail.rx / 2, nail.rx / 2]);
       ctx.clip();
 
-      if (design) {
-        drawNailDesign(ctx, design, nx, ny, nail.w, nail.h, uploadedDesignImg);
-      }
+      if (design) drawNailDesign(ctx, design, nx, ny, nail.w, nail.h, uploadedDesignImg);
 
       ctx.restore();
 
-      // Draw nail outline over clip (so it's not clipped itself)
+      // Outline (drawn outside clip)
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate((nail.rotation * Math.PI) / 180);
       ctx.beginPath();
       ctx.roundRect(-nail.w / 2, -nail.h / 2, nail.w, nail.h, [nail.w / 2, nail.w / 2, nail.rx / 2, nail.rx / 2]);
-      ctx.strokeStyle = 'rgba(0,0,0,0.12)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(0,0,0,0.10)';
+      ctx.lineWidth   = 1;
       ctx.stroke();
       ctx.restore();
     });
