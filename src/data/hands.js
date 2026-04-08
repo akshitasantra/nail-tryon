@@ -1,6 +1,6 @@
-import handDark from '../assets/hands/hand-dark.png';
+import handLight  from '../assets/hands/hand-light.png';
 import handMedium from '../assets/hands/hand-medium.png';
-import handLight from '../assets/hands/hand-light.png';
+import handDark   from '../assets/hands/hand-dark.png';
 
 export const HAND_MODELS = [
   {
@@ -8,14 +8,12 @@ export const HAND_MODELS = [
     label: 'light',
     undertone: 'cool',
     image: handLight,
-    // These are the pixel coords of each nail ON your specific image.
-    // You'll need to tune these to match your actual photos.
     nails: [
-      { id: 'pinky',  x: 102, y: 58,  w: 36, h: 48, rx: 12, rotation: -12 },
-      { id: 'ring',   x: 154, y: 36,  w: 40, h: 54, rx: 14, rotation: -4  },
-      { id: 'middle', x: 210, y: 22,  w: 42, h: 58, rx: 14, rotation:  2  },
-      { id: 'index',  x: 264, y: 36,  w: 40, h: 54, rx: 14, rotation:  8  },
-      { id: 'thumb',  x: 348, y: 128, w: 34, h: 44, rx: 12, rotation:  38 },
+      { id: 'thumb',  x: 550,  y: 2453, w: 76,  h: 250, rx: 38,  rotation: -35  },
+      { id: 'index',  x: 1413, y: 953,  w: 131, h: 219, rx: 66,  rotation: 8   },
+      { id: 'middle', x: 2113, y: 821,  w: 110, h: 219, rx: 55,  rotation: 2   },
+      { id: 'ring',   x: 2650, y: 1128, w: 98,  h: 208, rx: 49,  rotation: -4  },
+      { id: 'pinky',  x: 3241, y: 1785, w: 44,  h: 197, rx: 22,  rotation: -12 },
     ],
   },
   {
@@ -24,11 +22,11 @@ export const HAND_MODELS = [
     undertone: 'warm',
     image: handMedium,
     nails: [
-      { id: 'pinky',  x: 102, y: 58,  w: 36, h: 48, rx: 12, rotation: -12 },
-      { id: 'ring',   x: 154, y: 36,  w: 40, h: 54, rx: 14, rotation: -4  },
-      { id: 'middle', x: 210, y: 22,  w: 42, h: 58, rx: 14, rotation:  2  },
-      { id: 'index',  x: 264, y: 36,  w: 40, h: 54, rx: 14, rotation:  8  },
-      { id: 'thumb',  x: 348, y: 128, w: 34, h: 44, rx: 12, rotation:  38 },
+      { id: 'thumb',  x: 1263, y: 2395, w: 87,  h: 98,  rx: 44,  rotation: 35  },
+      { id: 'index',  x: 1872, y: 1687, w: 109, h: 87,  rx: 55,  rotation: 8   },
+      { id: 'middle', x: 2493, y: 1665, w: 87,  h: 109, rx: 44,  rotation: 2   },
+      { id: 'ring',   x: 2895, y: 1948, w: 55,  h: 98,  rx: 28,  rotation: -4  },
+      { id: 'pinky',  x: 2982, y: 2416, w: 33,  h: 87,  rx: 17,  rotation: -12 },
     ],
   },
   {
@@ -37,11 +35,11 @@ export const HAND_MODELS = [
     undertone: 'neutral',
     image: handDark,
     nails: [
-      { id: 'pinky',  x: 102, y: 58,  w: 36, h: 48, rx: 12, rotation: -12 },
-      { id: 'ring',   x: 154, y: 36,  w: 40, h: 54, rx: 14, rotation: -4  },
-      { id: 'middle', x: 210, y: 22,  w: 42, h: 58, rx: 14, rotation:  2  },
-      { id: 'index',  x: 264, y: 36,  w: 40, h: 54, rx: 14, rotation:  8  },
-      { id: 'thumb',  x: 348, y: 128, w: 34, h: 44, rx: 12, rotation:  38 },
+      { id: 'thumb',  x: 1005, y: 1503, w: 100, h: 91,  rx: 50,  rotation: 35  },
+      { id: 'index',  x: 1440, y: 1069, w: 90,  h: 154, rx: 45,  rotation: 8   },
+      { id: 'middle', x: 1866, y: 897,  w: 81,  h: 153, rx: 41,  rotation: 2   },
+      { id: 'ring',   x: 2291, y: 1132, w: 45,  h: 145, rx: 23,  rotation: -4  },
+      { id: 'pinky',  x: 2807, y: 2264, w: 90,  h: 172, rx: 45,  rotation: -12 },
     ],
   },
 ];
